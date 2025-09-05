@@ -1,18 +1,30 @@
 /* 主应用样式 */
 .app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
   font-family: 'Arial', sans-serif;
+  overflow-x: auto;
+}
+
+/* 动态背景动画 */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .app-header {
   text-align: center;
   padding: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
   margin-bottom: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 .app-header h1 {
@@ -20,6 +32,10 @@
   font-size: 2.5rem;
   font-weight: bold;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(45deg, #ffffff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .app-header p {
@@ -33,160 +49,316 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 20px;
+  gap: 30px;
   flex-wrap: wrap;
 }
 
 /* 游戏容器样式 */
 .hexagon-bounce-game {
   display: flex;
-  gap: 20px;
+  gap: 30px;
   align-items: flex-start;
   flex-wrap: wrap;
+  animation: slideInUp 1s ease-out;
 }
 
 .game-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  gap: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  border-radius: 25px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.canvas-container {
+  position: relative;
   border-radius: 20px;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .game-canvas {
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 15px;
   cursor: crosshair;
-  transition: transform 0.2s ease;
-  background: #0a0a0a;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  background: linear-gradient(45deg, #0a0a0a, #1a1a2e);
+  display: block;
 }
 
 .game-canvas:hover {
-  transform: scale(1.02);
+  transform: scale(1.01);
+  filter: brightness(1.1);
 }
 
 .instructions {
   text-align: center;
-  color: white;
-  font-size: 0.9rem;
-  opacity: 0.8;
-  max-width: 300px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  max-width: 350px;
+  line-height: 1.6;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  padding: 15px 20px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .instructions p {
-  margin: 5px 0;
+  margin: 8px 0;
 }
 
-/* 控制面板样式 */
+/* 增强版控制面板样式 */
 .control-panel {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 15px;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  min-width: 250px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px);
+  border-radius: 25px;
+  padding: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  min-width: 300px;
   color: white;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 添加动态背景效果 */
+.control-panel::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 0deg,
+    transparent,
+    rgba(0, 255, 136, 0.03),
+    transparent,
+    rgba(255, 107, 107, 0.03),
+    transparent
+  );
+  animation: rotate 10s linear infinite;
+  z-index: -1;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.control-panel:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .control-panel h3 {
   margin-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: white;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(45deg, #ffffff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
 }
 
 .control-group {
-  margin-bottom: 20px;
+  margin-bottom: 25px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.control-group:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
 }
 
 .control-group:last-child {
   margin-bottom: 0;
 }
 
+/* 增强按钮样式 */
 .control-button {
-  background: linear-gradient(45deg, #00ff88, #00cc6a);
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
   border: none;
-  padding: 12px 20px;
-  margin: 5px;
-  border-radius: 25px;
+  padding: 15px 25px;
+  margin: 8px;
+  border-radius: 50px;
   cursor: pointer;
   font-weight: bold;
   color: white;
-  font-size: 14px;
-  transition: all 0.3s ease;
+  font-size: 15px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+  box-shadow: 
+    0 8px 25px rgba(0, 255, 136, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+}
+
+.control-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.control-button:hover::before {
+  left: 100%;
 }
 
 .control-button:hover {
-  background: linear-gradient(45deg, #00cc6a, #00aa55);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+  background: linear-gradient(135deg, #00cc6a, #00aa55);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 15px 35px rgba(0, 255, 136, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .control-button:active {
-  transform: translateY(0);
-  box-shadow: 0 2px 10px rgba(0, 255, 136, 0.3);
+  transform: translateY(-1px) scale(0.98);
+  box-shadow: 
+    0 5px 15px rgba(0, 255, 136, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 
-/* 滑块样式 */
+/* 增强版滑块样式 */
 .control-group label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   font-weight: bold;
-  color: white;
+  color: rgba(255, 255, 255, 0.95);
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  font-size: 1.05rem;
 }
 
 .control-group input[type="range"] {
   width: 100%;
-  margin: 8px 0;
+  margin: 15px 0;
   background: transparent;
   cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  border-radius: 5px;
+  background: linear-gradient(to right, 
+    rgba(255, 255, 255, 0.2) 0%, 
+    rgba(0, 255, 136, 0.3) 100%);
+  outline: none;
+  position: relative;
 }
 
 .control-group input[type="range"]::-webkit-slider-track {
-  background: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(to right, 
+    rgba(255, 255, 255, 0.2) 0%, 
+    rgba(0, 255, 136, 0.3) 100%);
   border-radius: 5px;
   height: 8px;
   border: none;
 }
 
 .control-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
   appearance: none;
-  background: linear-gradient(45deg, #00ff88, #00cc6a);
+  background: linear-gradient(135deg, #00ff88, #ffffff);
   border-radius: 50%;
-  height: 18px;
-  width: 18px;
+  height: 24px;
+  width: 24px;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0, 255, 136, 0.5);
-  border: 2px solid white;
+  box-shadow: 
+    0 4px 15px rgba(0, 255, 136, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.2s ease;
+  position: relative;
 }
 
 .control-group input[type="range"]::-webkit-slider-thumb:hover {
-  background: linear-gradient(45deg, #00cc6a, #00aa55);
+  background: linear-gradient(135deg, #ffffff, #00ff88);
+  transform: scale(1.2);
+  box-shadow: 
+    0 6px 20px rgba(0, 255, 136, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.control-group input[type="range"]::-webkit-slider-thumb:active {
   transform: scale(1.1);
+}
+
+/* Firefox 滑块样式 */
+.control-group input[type="range"]::-moz-range-track {
+  background: linear-gradient(to right, 
+    rgba(255, 255, 255, 0.2) 0%, 
+    rgba(0, 255, 136, 0.3) 100%);
+  border-radius: 5px;
+  height: 8px;
+  border: none;
+}
+
+.control-group input[type="range"]::-moz-range-thumb {
+  background: linear-gradient(135deg, #00ff88, #ffffff);
+  border-radius: 50%;
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 255, 136, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  transition: all 0.2s ease;
 }
 
 .control-group span {
   display: inline-block;
-  margin-left: 10px;
-  font-weight: normal;
-  color: rgba(255, 255, 255, 0.8);
+  margin-left: 15px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(0, 255, 136, 0.1);
+  padding: 5px 12px;
+  border-radius: 15px;
+  border: 1px solid rgba(0, 255, 136, 0.2);
+  font-size: 0.9rem;
+  min-width: 60px;
+  text-align: center;
 }
 
-/* 响应式设计 */
+/* 响应式设计增强 */
 @media (max-width: 768px) {
   .app-main {
-    padding: 10px;
+    padding: 15px;
+    gap: 20px;
   }
   
   .hexagon-bounce-game {
@@ -205,15 +377,43 @@
   
   .control-panel {
     width: 100%;
-    max-width: 300px;
+    max-width: 350px;
+    padding: 20px;
+  }
+  
+  .control-group {
+    padding: 15px;
   }
 }
 
-/* 动画效果 */
-@keyframes fadeIn {
+@media (max-width: 480px) {
+  .app-header {
+    padding: 15px;
+  }
+  
+  .app-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .game-container {
+    padding: 15px;
+  }
+  
+  .control-panel {
+    padding: 15px;
+  }
+  
+  .control-button {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+
+/* 增强动画效果 */
+@keyframes slideInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -221,6 +421,277 @@
   }
 }
 
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);
+  }
+}
+
 .hexagon-bounce-game {
-  animation: fadeIn 0.8s ease-out;
+  animation: slideInUp 1s ease-out;
+}
+
+/* 特殊效果类 */
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+/* 提升整体视觉层次 */
+.app {
+  position: relative;
+}
+
+.app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #00ff88, #667eea);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #667eea, #00ff88);
+}
+
+/* 统计面板样式 */
+.stats-panel {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px);
+  border-radius: 25px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 
+    0 15px 50px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: white;
+  min-width: 320px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stats-panel::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 180deg,
+    transparent,
+    rgba(255, 107, 107, 0.02),
+    transparent,
+    rgba(0, 255, 136, 0.02),
+    transparent
+  );
+  animation: rotate 15s linear infinite reverse;
+  z-index: -1;
+}
+
+.stats-panel:hover {
+  transform: translateY(-3px);
+  box-shadow: 
+    0 25px 60px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.stats-panel h3 {
+  margin: 0 0 20px 0;
+  text-align: center;
+  font-size: 1.3rem;
+  background: linear-gradient(45deg, #ffffff, #ff6b6b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+}
+
+.stat-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  font-size: 1.5rem;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* 特定统计项颜色 */
+.stat-item.score .stat-icon {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+.stat-item.bounces .stat-icon {
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+}
+
+.stat-item.speed .stat-icon {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.stat-item.max-speed .stat-icon {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.stat-item.time .stat-icon {
+  background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.stat-item.status .stat-icon {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+}
+
+/* 速度条样式 */
+.speed-bar-container {
+  margin-top: 20px;
+}
+
+.speed-bar-label {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.speed-bar {
+  width: 100%;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.speed-bar-fill {
+  height: 100%;
+  transition: width 0.3s ease, background 0.3s ease;
+  border-radius: 6px;
+  position: relative;
+}
+
+.speed-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    transparent 100%);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 响应式统计面板 */
+@media (max-width: 768px) {
+  .stats-panel {
+    min-width: auto;
+    width: 100%;
+    max-width: 350px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .stat-item {
+    padding: 12px;
+  }
+  
+  .stat-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 1.3rem;
+  }
 }
