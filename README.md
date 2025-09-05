@@ -1,3 +1,9 @@
+# 🇨🇳 Language Switch | 语言切换
+
+[![中文](https://img.shields.io/badge/中文-README.md-blue)](README.md) | [![English](https://img.shields.io/badge/English-README--EN.md-red)](README-EN.md)
+
+---
+
 # 🎯 旋转六边形弹球游戏
 
 一个基于 React + TypeScript 开发的物理引擎弹球游戏。小球在旋转的六边形容器内受到重力和摩擦力影响，实现逼真的弹跳效果。
